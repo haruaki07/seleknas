@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      *,
+      *::after,
+      *::before {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      .list-item {
+        margin-bottom: 4px;
+        overflow: hidden;
+      }
+
+      .list-item input {
+        display: none;
+      }
+
+      .list-item label {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .list-item label::before {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 20px;
+        border: 1px solid black;
+        transition: border 250ms ease-in;
+      }
+
+      .list-item label::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        opacity: 0;
+        border: 1px solid black;
+        border-top-color: transparent;
+        border-left-color: transparent;
+        height: 18px;
+        width: 9px;
+        margin-top: -2px;
+        margin-left: 5px;
+        transform: rotate(45deg) translate(20px, 20px);
+        transition: all 250ms ease-in;
+      }
+
+      .list-item input:checked + label::before {
+        border-color: transparent;
+      }
+
+      .list-item input:checked + label::after {
+        opacity: 1;
+        transform: rotate(45deg) translate(0, 0);
+      }
+
+      .list-item label span {
+        margin-left: 10px;
+        position: relative;
+      }
+
+      .list-item input:checked + label span::after {
+        content: " ";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: black;
+        animation-name: strike;
+        animation-duration: 150ms;
+        animation-delay: 300ms;
+        animation-timing-function: linear;
+        animation-iteration-count: 1;
+        animation-fill-mode: backwards;
+      }
+
+      @keyframes strike {
+        0% {
+          width: 0;
+        }
+        100% {
+          width: 100%;
+        }
+      }
+
+      /* HTML: <div class="loader"></div> */
+      .loader {
+        height: 30px;
+        aspect-ratio: 6;
+        --c: #0000 64%, #000 66% 98%, #0000 101%;
+        background: radial-gradient(35% 146% at 50% 159%, var(--c)) 0 0,
+          radial-gradient(35% 146% at 50% -59%, var(--c)) 25% 100%;
+        background-size: calc(100% / 3) 50%;
+        background-repeat: repeat-x;
+        /* animation: l1 1s infinite linear; */
+      }
+      @keyframes l1 {
+        to {
+          background-position: 50% 0, 75% 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader"></div>
+    <div class="list">
+      <div class="list-item">
+        <input type="checkbox" id="t1" />
+        <label for="t1"><span>Task 1</span></label>
+      </div>
+      <div class="list-item">
+        <input type="checkbox" id="t2" />
+        <label for="t2"><span>Task 2</span></label>
+      </div>
+      <div class="list-item">
+        <input type="checkbox" id="t3" />
+        <label for="t3"><span>Task 3</span></label>
+      </div>
+      <div class="list-item">
+        <input type="checkbox" id="t4" />
+        <label for="t4"><span>Task 4</span></label>
+      </div>
+    </div>
+  </body>
+</html>

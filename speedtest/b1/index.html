@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML/CSS Sum</title>
+    <style>
+      *,
+      *::after,
+      *::before {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      .container {
+        position: relative;
+      }
+
+      .number input {
+        display: none;
+      }
+
+      .number .box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 80px;
+        border: 1px solid black;
+        margin-right: 4px;
+        float: left;
+      }
+
+      .number input:checked + .box {
+        background-color: gold;
+        border-width: 2px;
+      }
+
+      .number input:checked {
+      }
+
+      .clear {
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <label class="number">
+        <input type="checkbox" value="10" />
+        <div class="box">10</div>
+      </label>
+      <div class="first-number">
+        <label class="number">
+          <input type="checkbox" value="32" />
+          <div class="box">32</div>
+        </label>
+        <div class="second-number">
+          <label class="number">
+            <input type="checkbox" value="64" />
+            <div class="box">64</div>
+          </label>
+          <div class="third-number">
+            <label class="number">
+              <input type="checkbox" value="-15" />
+              <div class="box">-15</div>
+            </label>
+            <div class="fourth-number"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+      <p>asd</p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      const canvas = document.createElement("canvas");
+      canvas.width = 500;
+      canvas.height = 300;
+      document.body.appendChild(canvas);
+      const ctx = canvas.getContext("2d");
+      const gridColor = "#e0e0e0";
+      const axesColor = "#777";
+      const lineColor = "#4ade80";
+      const lineBackground = "rgba(34, 197, 94, 0.1)";
+
+      let interval = 1000; //1s
+      let padding = 50;
+      let chartWidth = canvas.width - padding * 2;
+      let chartHeight = canvas.height - padding * 2;
+
+      let data = [10, 20, 30, 25, 40, 50, 45, 60];
+
+      function drawAxes() {
+        ctx.strokeStyle = gridColor;
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 100; i += 10) {
+          const y = chartHeight - (chartHeight * i) / 100 + padding;
+          ctx.beginPath();
+          ctx.moveTo(padding, y);
+          ctx.lineTo(chartWidth + padding, y);
+          ctx.stroke();
+          ctx.closePath();
+
+          ctx.fillStyle = axesColor;
+          ctx.fillText(`${i}%`, chartWidth + padding + 2, y);
+        }
+
+        ctx.strokeStyle = axesColor;
+        ctx.beginPath();
+        ctx.moveTo(padding, chartHeight + padding);
+        ctx.lineTo(chartWidth + padding, chartHeight + padding);
+        ctx.lineTo(chartWidth + padding, padding);
+        ctx.stroke();
+      }
+
+      function drawLines() {
+        const maxValue = Math.max(...data);
+        const scaleX = chartWidth / (data.length - 1);
+        const scaleY = chartHeight / maxValue;
+
+        let x = 0,
+          y = 0;
+
+        const path = new Path2D();
+        (x = padding), (y = chartHeight + padding - data[0] * scaleY);
+        path.moveTo(x, y);
+
+        let x1;
+        for (let i = 1; i < data.length; i++) {
+          let x0 = padding + (i - 1) * scaleX;
+          let y0 = chartHeight + padding - data[i - 1] * scaleY;
+
+          x1 = padding + i * scaleX;
+          let y1 = chartHeight + padding - data[i] * scaleY;
+
+          let cpX = (x0 + x1) / 2;
+
+          path.bezierCurveTo(cpX, y0, cpX, y1, x1, y1);
+        }
+
+        ctx.strokeStyle = lineColor;
+        ctx.stroke(path);
+
+        ctx.fillStyle = lineBackground;
+
+        path.lineTo(x1, chartHeight + padding);
+        path.lineTo(padding, chartHeight + padding);
+        path.closePath();
+
+        ctx.fill(path);
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        drawAxes();
+        drawLines();
+
+        requestAnimationFrame(draw);
+      }
+
+      requestAnimationFrame(draw);
+
+      setInterval(() => {
+        data.push(Math.floor(Math.random() * 70));
+      }, 1000);
+    </script>
+  </body>
+</html>
